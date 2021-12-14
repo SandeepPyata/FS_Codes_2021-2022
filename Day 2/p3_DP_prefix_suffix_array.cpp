@@ -80,6 +80,36 @@ Explanation:
 By picking the box is [1] has the highest score is 1.
 
 */
+/*
+Sample Input-1:
+---------------
+9
+-3 1 -2 4 -2 2 3 -5 4
+ 
+Sample Output-1:
+----------------
+ 11
+   
+Explanation:
+------------
+By selecting consecutive boxes [4,-2,2,3,-5,4] and dropping -5 , has the highest
+score is 11.
+   
+ 
+Sample Input-2:
+---------------
+ 2
+ 1 -2
+  
+Sample Output-2:
+----------------
+1
+
+Explanation:
+------------
+By picking the box is [1] has the highest score is 1.
+
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -104,3 +134,21 @@ int maxSumSub(int arr[], int n){
  
     int fans = max_so_far;
  
+    for (int i = 1; i < n - 1; i++)
+        fans = max(fans,max(0, fw[i - 1]) +max(0, bw[i + 1]));
+        if(fans==0)
+            return *max_element(arr,arr+n);
+    return fans;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;i++)
+        cin>>arr[i];
+    cout << maxSumSub(arr, n);
+
+    return 0;
+}
