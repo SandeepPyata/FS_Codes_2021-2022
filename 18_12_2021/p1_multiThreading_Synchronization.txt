@@ -1,0 +1,205 @@
+/*
+There are a group of kids playing a game in a circle.This game is to check their
+Arithmetic division skills.We will start the game by selecting a kid and he has 
+to say 1 to start the game and the next kid turn arrives he has to say next 
+number but with the following rules.
+   - if number is divisible by 3 then the answer is "Hi".
+   - if number is divisible by 5 then the answer is "Hello".
+   - if number is divisible by both 3 and 5 then the answer is "HiHello".
+   - else the answer is the number itself.
+
+ Given a number N , return a string array result[] (1-indexed),which consists the 
+ answers from kid-1 to kid-N.
+
+Input Format:
+-------------
+Line-1: An integer N.
+
+Output Format:
+--------------
+Print a string array[].
+
+Constraints:
+• 1 <= n <= 10^4
+ 
+Sample Input-1:
+---------------
+4
+
+Sample Output-1:
+----------------
+1 2 Hi 4 
+
+
+Sample Input-2:
+---------------
+15
+
+Sample Output-2:
+----------------
+1 2 Hi 4 Hello Hi 7 8 Hi Hello 11 Hi 13 14 HiHello 
+ 
+
+
+*/
+
+import java.util.*;
+import java.io.*;
+
+class Shared
+{
+    int i = 1;
+    int n = 0;
+    Shared(int n){
+        this.n = n;
+    }
+    
+    public int get(){
+        if(i<=n)    return i;
+        return -1;
+    }
+    
+    public void set(){
+        this.i++;
+    }
+}
+
+class T1 implements Runnable
+{
+    Shared s;
+    T1(Shared s){
+        this.s = s;
+    }
+    public void run()
+    {
+        synchronized(s){
+            while(s.get()!=-1){
+                if(s.get()%3==0 && s.get()%5!=0){
+                    System.out.print("Hi" + " ");
+                    s.set();
+                    s.notifyAll();
+                }
+                else{
+                    try{
+                        s.wait();
+                    }
+                    catch(Exception e){
+                        System.out.print(e);
+                    }
+                }
+            }
+        }
+    }
+}
+class T2 implements Runnable
+{
+    Shared s;
+    T2(Shared s){
+        this.s = s;
+    }
+    public void run()
+    {
+        synchronized(s){
+            while(s.get()!=-1){
+                if(s.get()%5==0 && s.get()%3!=0){
+                    System.out.print("Hello" + " ");
+                    s.set();
+                    s.notifyAll();
+                }
+                else{
+                    try{
+                        s.wait();
+                    }
+                    catch(Exception e){
+                        System.out.print(e);
+                    }
+                }
+            }
+        }
+    }
+}
+class T3 implements Runnable
+{
+    Shared s;
+    T3(Shared s){
+        this.s = s;
+    }
+    public void run()
+    {
+        synchronized(s){
+            while(s.get()!=-1){
+                if(s.get()%3==0 && s.get()%5==0){
+                    System.out.print("HiHello" + " ");
+                    s.set();
+                    s.notifyAll();
+                }
+                else{
+                    try{
+                        s.wait();
+                    }
+                    catch(Exception e){
+                        System.out.print(e);
+                    }
+                }
+            }
+        }
+    }
+}
+class T4 implements Runnable
+{
+    Shared s;
+    T4(Shared s){
+        this.s = s;
+    }
+    public void run()
+    {
+        synchronized(s){
+            while(s.get()!=-1){
+                if(s.get()%3!=0 && s.get()%5!=0){
+                    System.out.print(s.get() + " ");
+                    s.set();
+                    s.notifyAll();
+                }
+                else{
+                    try{
+                        s.wait();
+                    }
+                    catch(Exception e){
+                        System.out.print(e);
+                    }
+                }
+            }
+        }
+    }
+}
+public class Main
+{
+    public static void main(String []args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Shared s = new Shared(n);
+        
+        Thread t1 = new Thread(new T1(s));
+        Thread t2 = new Thread(new T2(s));
+        Thread t3 = new Thread(new T3(s));
+        Thread t4 = new Thread(new T4(s));
+        
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+        
+        // Method 1 : Using try => join methods
+        // Method 2 : Making get() and set() methods synchronized 
+        
+        try{
+            t1.join();
+            t2.join();
+            t3.join();
+            t4.join();
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }        
+    }
+}

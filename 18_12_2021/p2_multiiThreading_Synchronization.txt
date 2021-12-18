@@ -1,0 +1,186 @@
+/*
+Suppose you are given the following code:
+
+class KmitNgit {
+  public void kmit() {
+    for (int i = 0; i < n; i++) {
+      print("Kmit");
+    }
+  }
+
+  public void ngit() {
+    for (int i = 0; i < n; i++) {
+      print("Ngit");
+    }
+  }
+}
+
+The same instance of KmitNgit will be passed to two different threads. 
+Thread A will call kmit() while thread B will call ngit(). 
+Modify the given program to output "KmitNgit" n times.
+
+Input Format:
+-------------
+An integer N.
+
+Output Format:
+--------------
+Print KmitNgit for N times using threads.
+
+
+Sample Input:
+-------------
+1
+Sample Output:
+--------------
+KmitNgit
+
+Explanation:
+------------
+There are two threads being fired asynchronously. 
+One of them calls kmit(), while the other calls ngit(). 
+"KmitNgit" is being output 1 time.
+
+
+Sample Input:
+-------------
+2
+
+Sample Output:
+--------------
+KmitNgitKmitNgit
+
+Explanation:
+------------
+"KmitNgit" is being output 2 times.
+*/
+import java.util.*;
+import java.io.*;
+
+class Shared {
+    int i=1;
+    int n;
+    int flag = 0;
+    Shared(int n){
+        this.n = n;
+    }
+    public synchronized int get(){
+        if(i<=n)
+            return i;
+        return -1;
+    }
+    public synchronized void set(){
+        if(flag==0)
+            flag = 1;
+        else{
+            flag = 0;
+            i++;
+        }
+    }
+}
+
+
+class Thread1 implements Runnable
+{
+    Shared s;
+    Thread1(Shared s){
+        this.s = s;
+    }
+    public void run()
+    {
+        synchronized(s){
+            while(s.get()!=-1){
+                if(s.flag==0){
+                    System.out.print("Kmit");
+                    s.set();
+                    s.notifyAll();
+                }
+                else{
+                    try{
+                        s.wait();
+                    }
+                    catch(Exception e){
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+class Thread2 implements Runnable
+{
+    Shared s;
+    Thread2(Shared s){
+        this.s = s;
+    }
+    public void run()
+    {
+        synchronized(s){
+            while(s.get()!=-1){
+                if(s.flag==1){
+                    System.out.print("Ngit");
+                    s.set();
+                    s.notifyAll();
+                }
+                else{
+                    try{
+                        s.wait();
+                    }
+                    catch(Exception e){
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+    }
+}
+
+public class Main
+{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n  = sc.nextInt();
+        
+        Shared s = new Shared(n);
+        
+        Thread t1 = new Thread(new Thread1(s));
+        Thread t2 = new Thread(new Thread2(s));
+        
+        t1.start();
+        t2.start();
+    }
+}
+
+/*
+Extra 
+class KmitNgit
+{
+    int n, turn = 0;
+    KmitNgit(int n){
+        this.n = n;
+    }
+    synchronized public void kmit() {
+        for (int i = 0; i < n; i++) {
+            while(turn==1){
+                s.wait();
+            }
+        }
+        System.out.print("Kmit");
+        turn = 0;
+        s.notifyAll();
+    }
+    
+    synchronized public void ngit() {
+        for (int i = 0; i < n; i++) {
+            while(turn==0){
+                s.wait();
+            }
+        }
+        System.out.print("Ngit");
+        turn = 1;
+        s.notifyAll();
+    }
+}
+*/
