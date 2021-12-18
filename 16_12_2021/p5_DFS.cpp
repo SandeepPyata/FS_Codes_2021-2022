@@ -61,7 +61,7 @@ int dfs(int i, int j, map<string,int>&mp){
     else if(i+j==2)     // at 1,1 => 2 steps to (0,0) => 2,-1 and 0,0 
         return 2;
     else{
-        int res = 1 + min(dfs(abs(i-1),abs(j-1),mp),dfs(abs(i-2),abs(j-1)));
+        int res = 1 + min(dfs(abs(i-1),abs(j-2),mp),dfs(abs(i-2),abs(j-1),mp));
         mp[key] = res;
         return res;
     }
