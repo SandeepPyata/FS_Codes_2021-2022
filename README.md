@@ -4,4 +4,6 @@
 - Arrays 
 - Strings
 - DSU
+- DP
 - Binary Trees
+- DFS, BFS
