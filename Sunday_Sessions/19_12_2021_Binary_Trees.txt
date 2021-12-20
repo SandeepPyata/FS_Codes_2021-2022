@@ -1,64 +1,7 @@
-https://leetcode.com/problems/binary-tree-level-order-traversal/
-https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
-https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
-https://leetcode.com/problems/average-of-levels-in-binary-tree/description/
-https://leetcode.com/problems/binary-tree-right-side-view/description/
-https://leetcode.com/problems/find-largest-value-in-each-tree-row/description/
-https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/
-https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
-https://leetcode.com/problems/n-ary-tree-level-order-traversal/
-
-
-
-
-
-
-
-Level Order traversal
-
-initialize queue(root)
-initialize ansList (ArrayList)
-
-while queue isn't empty:
-    layerSize = queue.size()
-
-    for(0 -> layerSize):
-        currNode = poll the node from the front of the queue
-        add currNode's value to our ansList
-        add left and right children of the currNode to queue
-    
-return ansList
-
-
-
-
-
-List<Integer> levelOrderTraversal(Tree root){
-    if(root == null) return new ArrayList<>();
-
-    ArrayDeque<Tree> queue = new ArrayDeque<>();
-    queue.offerLast(root);
-
-    List<Integer> ans = new ArrayList<>();
-
-    while(!queue.isEmpty()){
-        int layerSize = queue.size();
-
-        for(int nodeNo = 0; nodeNo < layerSize; nodeNo++){
-            Tree curr = queue.pollFirst();
-            ans.add(curr.val);
-            if(curr.left != null) queue.offerLast(curr.left);
-            if(curr.right != null) queue.offerLast(curr.right);
-        }
-    }
-
-    return ansList;
-}
-
-
-
-/*
-stack - push, pop, peek
-queue - offerLast, offerFirst, peekFirst, peekLast, pollFirst,
-        pollLast
-*/
+. level order
+. bottom up level order
+. zig zag level order
+. average level order
+. right values of binary tree
+. populating next right pointers in binary tree
+. N-ary tree level order
