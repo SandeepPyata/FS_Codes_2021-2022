@@ -3,6 +3,7 @@
 ## Topics ✍️
 - Arrays 
 - Strings
+- Binary search
 - DSU
 - DP
 - Binary Trees
