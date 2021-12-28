@@ -8,3 +8,4 @@
 - Binary Trees
 - DFS, BFS
 - Backtracking
+- Tries
