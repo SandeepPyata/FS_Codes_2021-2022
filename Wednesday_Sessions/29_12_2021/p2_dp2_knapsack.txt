@@ -1,0 +1,82 @@
+/*
+Tipsy-Topsy bakers has prepared N Boxes of muffins, 
+each box contains box[i] no.of muffins.
+Mr Bheemla ordered for P muffins.
+ 
+Your task is to pick a set of boxes, the total number of muffins in 
+the set of boxes together should be equals to P.
+
+If you are able to pick the boxes, print 'true'.
+Otherwis, print 'false'.
+
+Input Format:
+-------------
+Line-1: Two space separated integers, N, P.
+Line-2: N space separated integers, box[].
+
+Output Format:
+--------------
+Print a boolean result.
+
+
+Sample Input-1:
+---------------
+6 11
+5 27 8 4 9 3
+
+Sample Output-1:
+----------------
+true
+
+Explanation:
+-------------
+Box-2 + Box-5 = 8 + 3 = 11
+
+
+Sample Input-2:
+---------------
+5 20
+2 3 5 7 4
+
+Sample Output-2:
+----------------
+false
+*/
+
+import java.util.*;
+
+public class Test{
+
+    public static Map<String,Boolean> map=new HashMap<>();
+
+    public static boolean knapsack(int[]arr,int n,int t,int index){
+        if(t==0)    return true;
+        if(t<0)return false;
+        
+        String k = index+"|"+t;
+        if(map.containsKey(k))    return map.get(k);
+        if(index>=n)    return false;
+        
+        boolean a=false,b=false;
+        a=knapsack(arr,n,t-arr[index],index+1);
+        b=knapsack(arr,n,t,index+1);
+        map.put(k,a||b);
+        return map.get(k);
+    }
+    
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int total = sc.nextInt();
+        int[] box = new int[num];
+        for(int i=0;i<num;i++)
+            box[i]=sc.nextInt();
+
+        if(knapsack(box,num,total,0)){
+            System.out.println("true");
+        }
+        else{
+            System.out.println("false");
+        }
+    }
+}
