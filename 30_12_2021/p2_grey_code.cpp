@@ -50,6 +50,30 @@ Explanation:
 101 - 5
 100 - 4
  */
+
+
+
+/*
+Java code Using Bit Manipulation
+
+import java.util.*;
+import java.lang.*;
+class ma{
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        for (int i = 0; i < (1 << n); i++)
+        {
+            int k = (i ^ (i >> 1));    
+            String s = Integer.toBinaryString(k);
+            System.out.print(Integer.parseInt(s,2)+" "); 
+        }
+    }
+}
+*/
+
+
 #include <bits/stdc++.h>
 using namespace std;
 
