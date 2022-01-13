@@ -1,0 +1,3 @@
+Fenwick 1D : https://leetcode.com/problems/range-sum-query-mutable/
+Fenwick 2D : https://leetcode.ca/all/308.html
+Extra DP -> https://leetcode.com/problems/minimum-falling-path-sum/

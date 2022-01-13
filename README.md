@@ -10,3 +10,5 @@
 - DFS, BFS
 - Backtracking
 - Tries
+- Segment Trees
+- Fenwick Trees : 1D, 2D
