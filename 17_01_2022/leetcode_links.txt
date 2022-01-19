@@ -1,0 +1,7 @@
+1626 Leetcode : https://leetcode.com/problems/best-team-with-no-conflicts/
+
+1081 Leetcode : https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/
+
+291 Leetcode : Word Pattern II
+https://kennyzhuang.gitbooks.io/leetcode-lock/content/291_word_pattern_ii.html
+
