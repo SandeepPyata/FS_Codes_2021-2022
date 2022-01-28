@@ -5,8 +5,8 @@
 - Strings
 - Binary search
 - DSU
-- DP
-- Binary Trees
+- DP : 1D, 2D
+- Trees, BST
 - DFS, BFS
 - Backtracking
 - Tries
